@@ -4,8 +4,30 @@
     background-color:#F4F4F4;
     align-content:inherit;
     margin: 0;
+    font-size:14px;
 }
 
+.form-control {
+  padding-right: 30px;
+}
+
+.form-control + .glyphicon {
+  position: absolute;
+  right: 0;
+  padding: 8px 27px;
+}
+
+.a{
+    color:#2fa4e7;
+    font-family:"Segoe UI Light";
+}
+.h-divider{
+ margin-top:2px;
+ margin-bottom:5px;
+ height:1px;
+ width:100%;
+ border-top:1px solid gray;
+}
 .list-group list-group-item > p{
     background-color:transparent;
     border:none;
@@ -14,13 +36,19 @@
 
 hr{
     width:50px;
+    height:3px;
     color:#225954;
 }
-h1, h2{
+
+h2{
+    padding-top:1.8em;
+}
+
+h1{
     padding-top:1.5em;
 }
-h1,p,h2, a{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+h1,p,h2, form-horizontal.label{
+    font-family:'Segoe UI',Segoe,'Segoe WP',Tahoma,Verdana,Arial,sans-serif;
 }
 
 .navbar-inverse{
@@ -28,25 +56,28 @@ h1,p,h2, a{
     height:100px;
 }
 
+.navbar-right > li > a,
+.navbar-right > li > button{
+    float: right;
+    line-height: 20px;
+    height: 30px;
+    margin:auto;
+    position:relative;
+    font-size:14px;
+}
+
 .nav navbar-nav navbar-right{
-      float: right;
-    font-size: 25px;
-    line-height: 20px;
-    height: 50px;
-
-}
-.navbar-brand {
-    float: left;
-    font-size: 25px;
-    line-height: 20px;
-    height: 50px;
+    font-size: 1.8em !important;
 }
 
-.navbar-nav > li > a {
+.navbar{
+    font-size: 1.5em !important;
+}
+.navbar-nav > li > a,
+.navbar-nav > li > button{
 
-    font-family:Constantia;
+    font-family:'Segoe UI Light',Segoe,'Segoe WP',Tahoma,Verdana,Arial,sans-serif;
     padding-top: 40px;
-    padding-bottom: 5px;
     line-height: 20px;
 }
 .navbar-collapse > ul a:link{ 
@@ -64,10 +95,15 @@ h1,p,h2, a{
     padding-right: 30px;
 }
 
+
+h1 >a{
+    float:right;
+}
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select {
     max-width: 400px;
+    font-size:medium;
 }
 textarea {
     max-width: 700px;

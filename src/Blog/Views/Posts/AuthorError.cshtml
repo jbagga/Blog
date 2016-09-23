@@ -4,6 +4,12 @@
 <h2>@ViewData[""]Oops!</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p>You are not the author of this blog post. Choose your blog post to edit.</p>
-<a asp-action="Index">Back to List</a>
+<div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+   Looks like you are not the author of this blog post or comment. Choose your blog post to edit.
+</div>
+
+
+<a asp-action="Index">Back to Posts</a>
 

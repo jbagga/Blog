@@ -22,6 +22,7 @@ namespace Blog.Models
         public string Title { get; set; }
 
         [Display(Name = "Last Modified Date")]
+        [DisplayFormat(DataFormatString = "{0:dddd, MMMM d, yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
@@ -30,10 +31,14 @@ namespace Blog.Models
 
         
         [StringLength(6000, MinimumLength = 1)]
+        [Display(Name = "Blog Post")]
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
+
+        [Display(Name = "Post by")]
         public string Author { get; set; }
 
+        [Display(Name = "Comments")]
         public List<Comment> CommentList { get; set; }
     }
 }

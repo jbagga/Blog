@@ -41,7 +41,7 @@ namespace Blog.Controllers
 
             var postCategoryVM = new PostCategoryViewModel();
             postCategoryVM.categories = new SelectList(await categoryQuery.Distinct().ToListAsync());
-            postCategoryVM.posts = await posts.ToListAsync();
+            postCategoryVM.posts = await posts.OrderByDescending(x => x.Date).ToListAsync();
             //foreach(var item in postCategoryVM.categories)
             //{
             //    postCategoryVM.selectedCategories.Add(item.Value);
@@ -87,7 +87,7 @@ namespace Blog.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostComment([Bind("CommentBody, ID")] Comment comment)
+        public async Task<IActionResult> PostComment([Bind("CommentBody,PostID")] Comment comment)
         {
             if (ModelState.IsValid)
             {

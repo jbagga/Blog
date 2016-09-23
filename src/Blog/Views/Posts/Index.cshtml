@@ -5,34 +5,48 @@
 }
 
 
-<h1>Blog Posts Archive</h1>
+<h1>Blog Posts <a asp-action="Create"><span class="glyphicon glyphicon-pencil black" aria-hidden="true"></span></a></h1>
 
 <form asp-controller="Posts" asp-action="Index" method="get">
-    <p>
-        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
-        by Category: <select asp-for="postCategory" asp-items="Model.categories">
+    <p class="large">
+
+        Category: <select asp-for="postCategory" asp-items="Model.categories">
             <option value="">All</option>
         </select>
-        by Author: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
+        Author: <input type="text" name="SearchString">
+
+        <input type="submit" value="Search" />
     </p>
+
+   
+      
+
 </form>
+<br/>
 
 @foreach (var item in Model.posts)
 {
 
     <ul class="list-group">
-        <li class="list-group-item"><a asp-action="Details" asp-route-id="@item.ID"><p>@item.Title</p></a></li>
-        @if (@item.Body.Length < 100)
+        <li class="list-group-item first"><a asp-action="Details" asp-route-id="@item.ID"><h4>@item.Title</h4></a></li>
+        <li class="list-group-item"><p>@item.Date</p></li>
+        <li class="list-group-item"><p class="h-divider"></p>
+        </li>
+        <li class="list-group-item"><p>@item.Category</p></li>
+        <li class="list-group-item">
+            <p class="h-divider"></p>
+        </li>
+        @if (@item.Body.Length < 200)
         { 
         <li class="list-group-item"><p>@item.Body</p></li>
         }
         else
         {
-        <li class="list-group-item"><p>@item.Body.Substring(0, 100)<a asp-action="Details" asp-route-id="@item.ID">...</a></p></li>
+        <li class="list-group-item"><p>@item.Body.Substring(0, 200)</p></li>
+        <li class="list-group-item"><a asp-action="Details" asp-route-id="@item.ID">Read more...</a></li>
         }
-        <li class="list-group-item"><p>Category: @item.Category</p></li>
-        <li class="list-group-item"><p>@item.Date</p></li>
+       
+        
         <li class="list-group-item"><p>Post by: @item.Author</p></li>
     </ul>
     <tbody>
@@ -43,11 +57,12 @@
                 
                 <a asp-action="Details" asp-route-id="@item.ID"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span></a> |
                
-                <a asp-action="Delete" asp-route-id="@item.ID"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                <a asp-action="Delete" asp-route-id="@item.ID"><span class="glyphicon glyphicon-trash" aria-hidden="true"></a>
             </td>
         </tr>
     </tbody>
-    <hr>
+    
+    
     <br />
     <br/>
     <br />
@@ -57,7 +72,3 @@
 
 <br/>
 <br/>
-<p>
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    <a asp-action="Create">Create New</a>
-</p>

@@ -4,6 +4,14 @@
 <h2>@ViewData["Title"].</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p class="bg-warning">Please sign in before creating a blog</p>
+<h2>@ViewData[""]Oops!</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    Please sign in before creating a blog
+</div>
+
 <a asp-action="Index">Back to List</a>
 

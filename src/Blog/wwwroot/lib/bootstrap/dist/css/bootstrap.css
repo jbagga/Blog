@@ -130,6 +130,7 @@ textarea {
 }
 button {
   overflow: visible;
+
 }
 button,
 select {
@@ -288,6 +289,14 @@ th {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon.glyphicon-search{
+    font-size:25px;
+}
+
+.black{
+    color:#373737;
 }
 .glyphicon-asterisk:before {
   content: "\002a";
@@ -4964,6 +4973,7 @@ a.badge:focus {
 .nav-pills > .active > a > .badge {
   color: #337ab7;
   background-color: #fff;
+  padding-left:2px;
 }
 .list-group-item > .badge {
   float: right;
@@ -5328,10 +5338,12 @@ button.list-group-item {
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
-  z-index: 2;
+  z-index: 1;
   color: #fff;
   background-color: #337ab7;
   border-color: #337ab7;
+  padding-left:10px;
+  padding-top:15px;
 }
 .list-group-item.active .list-group-item-heading,
 .list-group-item.active:hover .list-group-item-heading,

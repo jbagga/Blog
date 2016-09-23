@@ -15,7 +15,10 @@ namespace Blog.Models
         public DateTime CommentDate { get; set; }
 
         [StringLength(1000, MinimumLength = 1)]
+        [Display(Name = "Comment")]
         public string CommentBody { get; set; }
+
+        [Display(Name = "Comment by")]
         public string CommentAuthor { get; set; }
     }
 }
