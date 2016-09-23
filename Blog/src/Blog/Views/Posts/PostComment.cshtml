@@ -1,0 +1,40 @@
+
+
+@model Blog.Models.Comment
+
+@{
+    ViewData["Title"] = "PostComment";
+}
+
+<form asp-action="PostComment">
+    <div class="form-horizontal">
+        <h4>Comments:</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PostID" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="CommentBody" class="col-md-2 control-label"></label>
+            <div class="col-xs-9">
+                <textarea asp-for="CommentBody" rows="40" class="form-control" placeholder="Type your comment here..."></textarea>
+                <span asp-validation-for="CommentBody" class="text-danger" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="PostComment" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+    @*<div>
+            <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>*@
