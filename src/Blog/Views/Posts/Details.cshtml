@@ -1,0 +1,65 @@
+@model Blog.Models.Post
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<h2>@Html.DisplayFor(model => model.Title)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-vertical">
+        <dd>
+            @Html.Raw(Model.Body)
+        </dd>
+        <br>
+        <dt>
+            @Model.Category
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <br>
+        <br>
+        <dt>
+            Comments:
+        </dt>
+        @if (Model.CommentList != null)
+        {
+            @foreach (var item in Model.CommentList)
+            {
+
+                <dd>
+                    @item.CommentBody
+                </dd>
+                <dt>
+                    @item.CommentAuthor
+                </dt>
+                <dd>
+                    @item.CommentDate
+                </dd>
+                <br>
+                <p>
+                    <a asp-action="EditComment" asp-route-id="@item.ID" asp-route-PostID="@item.PostID">Edit Comment</a> |
+                    <a asp-action="DeleteComment" asp-route-id="@item.ID" asp-route-PostID="@item.PostID">Delete Comment</a>
+
+                </p>
+            }
+        }
+    </dl>
+
+    <br>
+    <p>
+        <a asp-action="PostComment" asp-route-id="@Model.ID">Write a comment</a>
+    </p>
+</div>

@@ -1,0 +1,40 @@
+@model Blog.Models.Comment
+@{
+    ViewData["Title"] = "DeleteComment";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this comment?</h3>
+<div>
+    <h4>Comment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentAuthor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CommentAuthor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentBody)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CommentBody)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CommentDate)
+        </dd>
+
+    </dl>
+    
+    <form asp-action="DeleteCommentConfirmed" asp-route-id="@Model.ID" asp-route-PostID="@Model.PostID">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>
