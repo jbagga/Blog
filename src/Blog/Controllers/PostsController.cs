@@ -40,9 +40,9 @@ namespace Blog.Controllers
             }
 
             var postCategoryVM = new PostCategoryViewModel();
-            postCategoryVM.categories = new SelectList(await categoryQuery.Distinct().ToListAsync());
-            postCategoryVM.posts = await posts.OrderByDescending(x => x.Date).ToListAsync();
-            //foreach(var item in postCategoryVM.categories)
+            postCategoryVM.Categories = new SelectList(await categoryQuery.Distinct().ToListAsync());
+            postCategoryVM.Posts = await posts.OrderByDescending(x => x.Date).ToListAsync();
+            //foreach(var item in postCategoryVM.Categories)
             //{
             //    postCategoryVM.selectedCategories.Add(item.Value);
             //}

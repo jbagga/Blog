@@ -10,7 +10,7 @@
 <form asp-controller="Posts" asp-action="Index" method="get">
     <p class="large">
 
-        Category: <select asp-for="postCategory" asp-items="Model.categories">
+        Category: <select asp-for="PostCategory" asp-items="Model.Categories">
             <option value="">All</option>
         </select>
         Author: <input type="text" name="SearchString">
@@ -24,7 +24,7 @@
 </form>
 <br/>
 
-@foreach (var item in Model.posts)
+@foreach (var item in Model.Posts)
 {
 
     <ul class="list-group">

@@ -10,9 +10,9 @@ namespace Blog.Models
 
     public class PostCategoryViewModel
     {
-        public List<Post> posts;
-        public SelectList categories;
-        public string postCategory { get; set; }
+        public List<Post> Posts { get; set; }
+        public SelectList Categories { get; set; }
+        public string PostCategory { get; set; }
     }
     public class Post
     {
