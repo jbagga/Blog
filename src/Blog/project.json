@@ -45,7 +45,8 @@
       "version": "1.0.0-preview2-update1",
       "type": "build"
     },
-    "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0"
+    "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0",
+    "Swashbuckle": "6.0.0-beta902"
   },
 
   "tools": {

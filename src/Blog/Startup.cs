@@ -13,6 +13,7 @@ using Blog.Data;
 using Blog.Models;
 using Blog.Services;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.SwaggerGen.Generator;
 
 namespace Blog
 {
@@ -58,6 +59,7 @@ namespace Blog
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
+            services.AddSwaggerGen();
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -94,6 +96,11 @@ namespace Blog
                 AppSecret = Configuration["Authentication:Facebook:AppSecret"]
             });
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
+            app.UseSwaggerUi();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>

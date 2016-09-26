@@ -22,14 +22,14 @@ namespace Blog.Controllers
         }
 
         // GET: api/BlogApi
-        [HttpGet]
+        [HttpGet("GetAllBlogPosts")]
         public IEnumerable<Post> GetBlog()
         {
             return _context.Post;
         }
 
         // GET: api/BlogApi/5
-        [HttpGet("{id}")]
+        [HttpGet("GetBlogPost/{id}")]
         public async Task<IActionResult> GetBlog([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -37,7 +37,7 @@ namespace Blog.Controllers
                 return BadRequest(ModelState);
             }
 
-            Post post = await _context.Post.SingleOrDefaultAsync(m => m.ID == id);
+            Post post = await _context.Post.Include(p => p.CommentList).SingleOrDefaultAsync(m => m.ID == id);
 
             if (post == null)
             {
@@ -47,8 +47,31 @@ namespace Blog.Controllers
             return Ok(post);
         }
 
+        // GET: api/BlogApi/GetComments/5
+        [HttpGet("GetCommentsForPost/{id}")]
+        public async Task<IActionResult> GetComments([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Post post = await _context.Post.Include(p => p.CommentList).SingleOrDefaultAsync(m => m.ID == id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(post.CommentList);
+            }
+            //return Ok(post);
+
+        }
+
         // PUT: api/BlogApi/5
-        [HttpPut("{id}")]
+        [HttpPut("EditBlogPost/{id}")]
         public async Task<IActionResult> PutBlog([FromRoute] int id, [FromBody] Post post)
         {
             if (!ModelState.IsValid)
@@ -83,7 +106,7 @@ namespace Blog.Controllers
         }
 
         // POST: api/BlogApi
-        [HttpPost]
+        [HttpPost("CreateBlog")]
         public async Task<IActionResult> PostBlog([FromBody] Post post)
         {
             if (!ModelState.IsValid)
@@ -112,7 +135,7 @@ namespace Blog.Controllers
         }
 
         // DELETE: api/BlogApi/5
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteBlog/{id}")]
         public async Task<IActionResult> DeleteBlog([FromRoute] int id)
         {
             if (!ModelState.IsValid)
