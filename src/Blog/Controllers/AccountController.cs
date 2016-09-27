@@ -11,10 +11,12 @@ using Microsoft.Extensions.Logging;
 using Blog.Models;
 using Blog.Models.AccountViewModels;
 using Blog.Services;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace Blog.Controllers
 {
-    [Authorize]
+
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -37,7 +39,12 @@ namespace Blog.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
-        //
+
+        public IActionResult Forbidden()
+        {
+            return View();
+        }
+
         // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
@@ -54,6 +61,23 @@ namespace Blog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            //const string Issuer = "https://contoso.com";
+            //var claims = new List<Claim>();
+            //claims.Add(new Claim(ClaimTypes.Name, model.Email, ClaimValueTypes.String, Issuer));
+            //claims.Add(new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String, Issuer));
+            //claims.Add(new Claim("email", model.Email, ClaimValueTypes.String, Issuer));
+            //var userIdentity = new ClaimsIdentity("SuperSecureLogin");
+            //userIdentity.AddClaims(claims);
+            //var userPrincipal = new ClaimsPrincipal(userIdentity);
+
+            //await HttpContext.Authentication.SignInAsync("Cookie", userPrincipal,
+            //    new AuthenticationProperties
+            //    {
+            //        ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
+            //        IsPersistent = false,
+            //        AllowRefresh = false
+            //    });
+
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {

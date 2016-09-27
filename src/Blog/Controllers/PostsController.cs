@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
     public class PostsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;        
 
         public PostsController(ApplicationDbContext context)
         {
@@ -20,14 +21,14 @@ namespace Blog.Controllers
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index(string postCategory,string searchString)
+        public async Task<IActionResult> Index(string postCategory, string searchString)
         {
             IQueryable<string> categoryQuery = from m in _context.Post
-                                            orderby m.Category
-                                            select m.Category;
+                                               orderby m.Category
+                                               select m.Category;
 
             var posts = from p in _context.Post
-                         select p;
+                        select p;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -42,11 +43,6 @@ namespace Blog.Controllers
             var postCategoryVM = new PostCategoryViewModel();
             postCategoryVM.Categories = new SelectList(await categoryQuery.Distinct().ToListAsync());
             postCategoryVM.Posts = await posts.OrderByDescending(x => x.Date).ToListAsync();
-            //foreach(var item in postCategoryVM.Categories)
-            //{
-            //    postCategoryVM.selectedCategories.Add(item.Value);
-            //}
-
             return View(postCategoryVM);
         }
 
@@ -80,6 +76,7 @@ namespace Blog.Controllers
             {
                 return NotFound();
             }
+
             var model = new Comment();
             model.PostID = post.ID;
             return View("PostComment", model);
@@ -96,11 +93,11 @@ namespace Blog.Controllers
                 else comment.CommentAuthor = User.Identity.Name;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-
                 return RedirectToAction("Index");
             }
             else return View();
         }
+
 
         // GET: Posts/DeleteComment/5
         public async Task<IActionResult> DeleteComment(int? id, int? PostID)
@@ -118,16 +115,18 @@ namespace Blog.Controllers
 
             int indexToDelete = post.CommentList.FindIndex(c => c.ID == id.Value);
             Comment commentToDelete = post.CommentList[indexToDelete];
-
             if (commentToDelete.CommentAuthor == User.Identity.Name || post.Author == User.Identity.Name)
             {
-
                 return View(commentToDelete);
             }
             else return View("DeleteError");
         }
 
+
+        
+
         // POST: Posts/Delete/5
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCommentConfirmed(int id, int PostID)
         {
@@ -140,6 +139,7 @@ namespace Blog.Controllers
         }
 
         // GET: Posts/Edit/5
+
         public async Task<IActionResult> EditComment(int? id, int? PostID)
         {
             if (id == null)
@@ -251,7 +251,6 @@ namespace Blog.Controllers
             {
                 return View("AuthorError");
             }
-
             else
             {
 
@@ -279,8 +278,6 @@ namespace Blog.Controllers
                     post.Author = User.Identity.Name;
                     _context.Update(post);
                     await _context.SaveChangesAsync();
-
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -335,19 +332,17 @@ namespace Blog.Controllers
 
         private bool CommentExists(int id)
         {
-            foreach(var post in _context.Post.ToList())
+            foreach (var post in _context.Post.ToList())
             {
                 foreach (var comment in post.CommentList)
                 {
-                    if (comment.ID==id)
+                    if (comment.ID == id)
                     {
                         return true;
                     }
-        
                 }
             }
-            return false; 
+            return false;
         }
-
     }
 }

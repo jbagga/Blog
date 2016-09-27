@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Blog.Data;
 using Blog.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,8 +38,12 @@ namespace Blog.Controllers
 
             return View(post);
         }
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
 
-      
+            return View();
+        }
 
         public IActionResult Error()
         {

@@ -46,7 +46,9 @@
       "type": "build"
     },
     "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0",
-    "Swashbuckle": "6.0.0-beta902"
+    "Swashbuckle": "6.0.0-beta902",
+    "AuthoringTagHelpers": "1.0.0-*",
+    "Microsoft.AspNetCore.Authorization": "1.0.0"
   },
 
   "tools": {
@@ -86,6 +88,7 @@
   "publishOptions": {
     "include": [
       "wwwroot",
+      "Areas/**/*.cshtml",
       "**/*.cshtml",
       "appsettings.json",
       "web.config"

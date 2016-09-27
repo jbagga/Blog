@@ -14,6 +14,10 @@ using Blog.Models;
 using Blog.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Generator;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Blog
 {
@@ -58,11 +62,25 @@ namespace Blog
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
+            //services.AddMvc(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                     .RequireAuthenticatedUser()
+            //                     .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
 
             services.AddSwaggerGen();
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AdministratorOnly", policy => policy.RequireRole("Administrator"));
+                
+            //});
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +108,15 @@ namespace Blog
 
             app.UseIdentity();
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookie",
+                LoginPath = new PathString("/Account/Login/"),
+                AccessDeniedPath = new PathString("/Account/Forbidden/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
+
             app.UseFacebookAuthentication(new FacebookOptions()
             {
                 AppId = Configuration["Authentication:Facebook:AppId"],
@@ -105,6 +132,9 @@ namespace Blog
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "areaRoute",
+   template: "{area:exists}/{controller=Home}/{action=Index}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
