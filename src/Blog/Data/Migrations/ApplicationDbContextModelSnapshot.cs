@@ -75,7 +75,7 @@ namespace Blog.Data.Migrations
                     b.Property<string>("CommentBody")
                         .HasAnnotation("MaxLength", 1000);
 
-                    b.Property<DateTime>("CommentDate");
+                    b.Property<DateTimeOffset>("CommentDate");
 
                     b.Property<int>("PostID");
 
@@ -99,7 +99,7 @@ namespace Blog.Data.Migrations
                     b.Property<string>("Category")
                         .HasAnnotation("MaxLength", 60);
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTimeOffset>("Date");
 
                     b.Property<string>("Title")
                         .HasAnnotation("MaxLength", 60);

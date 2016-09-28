@@ -11,8 +11,8 @@ namespace Blog.Models
         public int ID { get; set; }
         public int PostID { get; set;}
         [Display(Name = "Comment Date")]
-        [DataType(DataType.Date)]
-        public DateTime CommentDate { get; set; }
+        //[DataType(DataType.Date)]
+        public DateTimeOffset CommentDate { get; set; }
 
         [StringLength(1000, MinimumLength = 1)]
         [Display(Name = "Comment")]

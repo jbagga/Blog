@@ -22,9 +22,9 @@ namespace Blog.Models
         public string Title { get; set; }
 
         [Display(Name = "Last Modified Date")]
-        [DisplayFormat(DataFormatString = "{0:dddd, MMMM d, yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:dddd, MMMM d, yyyy}", ApplyFormatInEditMode = true)]
+        //[DataType(DataType.DateTime)]
+        public DateTimeOffset Date { get; set; }
 
         [StringLength(60, MinimumLength = 1)]
         public string Category { get; set; }

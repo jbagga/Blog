@@ -14,7 +14,7 @@ namespace AuthoringTagHelpers.TagHelpers
         private const string EmailDomain = "microsoft.com";
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagName = "a";    // Replaces <email> with <a> tag
+            output.TagName = "a";                                 // Replaces <email> with <a> tag
             var content = await output.GetChildContentAsync();
             var target = content.GetContent() + "@" + EmailDomain;
             output.Attributes.SetAttribute("href", "mailto:" + target);

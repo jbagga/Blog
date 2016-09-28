@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+    [AllowAnonymous]
     [Produces("application/json")]
     [Route("api/BlogApi")]
     public class BlogApiController : Controller
