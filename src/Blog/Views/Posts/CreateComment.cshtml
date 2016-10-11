@@ -3,10 +3,10 @@
 @model Blog.Models.Comment
 
 @{
-    ViewData["Title"] = "PostComment";
+    ViewData["Title"] = "Comments";
 }
 
-<form asp-action="PostComment">
+<form asp-action="CreateComment">
     <div class="form-horizontal">
         <h4>Comments:</h4>
         <hr />
@@ -34,7 +34,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    @*<div>
-            <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
+@*<div>
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>*@

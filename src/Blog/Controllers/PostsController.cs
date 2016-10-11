@@ -68,9 +68,8 @@ namespace Blog.Controllers
             return View(post);
         }
 
-        [AllowAnonymous]
-        // GET: Posts/PostComment
-        public async Task<IActionResult> PostComment(int? id)
+        // GET: Posts/CreateComment
+        public async Task<IActionResult> CreateComment(int? id)
         {
             if (id == null)
             {
@@ -85,26 +84,17 @@ namespace Blog.Controllers
 
             var model = new Comment();
             model.PostID = post.ID;
-            return View("PostComment", model);
+            return View("CreateComment", model);
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostComment([Bind("CommentBody,PostID")] Comment comment)
+        public async Task<IActionResult> CreateComment([Bind("CommentBody,PostID")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                comment.CommentDate = DateTimeOffset.Now;//DateTime Off set
-                if (User.Identity.Name == null)
-                {
-                    comment.CommentAuthor = "anonymous";
-                }
-                else
-                {
-                    comment.CommentAuthor = User.Identity.Name;
-                }
-
+                comment.CommentDate = DateTimeOffset.Now;
+                comment.CommentAuthor = User.Identity.Name;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -115,7 +105,7 @@ namespace Blog.Controllers
             }
         }
 
-        
+
         // GET: Posts/DeleteComment/5
         public async Task<IActionResult> DeleteComment(int? id, int? PostID)
         {
@@ -130,7 +120,7 @@ namespace Blog.Controllers
                 return NotFound();
             }
 
-            var commentToDelete=post.CommentList.SingleOrDefault(c=> c.ID == id.Value);
+            var commentToDelete = post.CommentList.SingleOrDefault(c => c.ID == id.Value);
             var commentPostAuthors = new CommentPostAuthors();
             commentPostAuthors.CommentAuthor = commentToDelete.CommentAuthor;
             commentPostAuthors.PostAuthor = post.Author;
@@ -143,15 +133,15 @@ namespace Blog.Controllers
             {
                 return View("DeleteError");
             }
-          
+
         }
 
-        
+
         // POST: Posts/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCommentConfirmed(int? id, int? PostID)
-        {         
+        {
             var post = await _context.Post.Include(p => p.CommentList).SingleOrDefaultAsync(m => m.ID == PostID);
             if (post == null)
             {
@@ -163,10 +153,10 @@ namespace Blog.Controllers
             commentPostAuthors.CommentAuthor = commentToDelete.CommentAuthor;
             commentPostAuthors.PostAuthor = post.Author;
             if (await _authorizationService.AuthorizeAsync(User, commentPostAuthors, new EditDeleteRequirement()))
-            {                
+            {
                 post.CommentList.Remove(commentToDelete);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", new { ID = PostID }); 
+                return RedirectToAction("Details", new { ID = PostID });
             }
             else
             {
@@ -176,7 +166,7 @@ namespace Blog.Controllers
 
         // GET: Posts/Edit/5
         public async Task<IActionResult> EditComment(int? id, int? PostID)
-        {          
+        {
             if (id == null)
             {
                 return NotFound();
@@ -187,8 +177,8 @@ namespace Blog.Controllers
             {
                 return NotFound();
             }
-            
-            var commentToEdit = post.CommentList.SingleOrDefault(c => c.ID == id);                    
+
+            var commentToEdit = post.CommentList.SingleOrDefault(c => c.ID == id);
             if (await _authorizationService.AuthorizeAsync(User, commentToEdit, new EditDeleteRequirement()))
             {
                 return View(commentToEdit);
@@ -197,7 +187,7 @@ namespace Blog.Controllers
             else
             {
                 return View("AuthorError");
-            }                   
+            }
         }
 
         // POST: Posts/EditComment/5
@@ -227,7 +217,7 @@ namespace Blog.Controllers
                         {
                             return View("AuthorError");
                         }
-                       
+
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -246,8 +236,6 @@ namespace Blog.Controllers
             }
         }
 
-
-        //Authorize and move Login back
         // GET: Posts/Create
         public IActionResult Create()
         {
@@ -255,15 +243,13 @@ namespace Blog.Controllers
         }
 
         // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Body,Category,Title")] Post post)
         {
             if (ModelState.IsValid)
             {
-                post.Date = DateTimeOffset.UtcNow;
+                post.Date = DateTimeOffset.Now;
                 post.Author = User.Identity.Name;
                 _context.Add(post);
                 await _context.SaveChangesAsync();
@@ -301,8 +287,6 @@ namespace Blog.Controllers
         }
 
         // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Body,Category,Title,Author")] Post post)
@@ -311,24 +295,24 @@ namespace Blog.Controllers
             {
                 return NotFound();
             }
-                             
+
             if (ModelState.IsValid)
             {
                 try
                 {
                     post.Date = DateTimeOffset.Now;
                     if (await _authorizationService.AuthorizeAsync(User, post, new EditDeleteRequirement()))
-                    {                       
+                    {
                         _context.Update(post);
                         await _context.SaveChangesAsync();
                         return RedirectToAction("Details", new { ID = post.ID });
 
-                    }                   
+                    }
                     else
                     {
                         return View("AuthorError");
                     }
-                   
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -341,7 +325,6 @@ namespace Blog.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction("Index");
             }
 
             return View(post);
@@ -392,16 +375,16 @@ namespace Blog.Controllers
             {
                 return new ChallengeResult();
             }
-      
+
         }
 
         private bool PostExists(int id)
         {
             return _context.Post.Any(e => e.ID == id);
-            
+
         }
 
-        
+
         //TO DO: Clean up
         private bool CommentExists(int id)
         {
